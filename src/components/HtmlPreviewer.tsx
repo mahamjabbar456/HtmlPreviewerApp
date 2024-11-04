@@ -1,58 +1,50 @@
 'use client';
-// Import necessary hooks from React
-import { useState,ChangeEvent } from "react";
-// Import custom UI components from the UI directory
-import { Textarea } from "./ui/textarea";
+
+import { ChangeEvent, useState } from "react"
+import { Textarea } from "./ui/textarea"
 import { Button } from "./ui/button";
 
 import { predefinedHtml } from "./predefinedHtml";
 
 const HtmlPreviewer = () => {
-      // State hooks for managing HTML code input and preview
-    const [htmlCode,setHtmlCode] = useState<string>("");
-    const [previewCode,setPreviewCode] = useState<string>("");
+  const [htmlCode,setHtmlCode] = useState<string>("");
+  const [HtmlPreviewer,setHtmlPreviewer] = useState<string>("");
 
-      // Handler for updating HTML code state on textarea change
-    const handleChange = (e : ChangeEvent<HTMLTextAreaElement>) : void => {
-         setHtmlCode(e.target.value);
-    }
+  const handleChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
+    setHtmlCode(e.target.value)
+  }
 
-      // Handler to generate HTML preview
-    const handlePreview = () : void => {
-        setPreviewCode(htmlCode);
-    }
+  const handlePreview = () =>{
+    setHtmlPreviewer(htmlCode);
+  }
 
-      // Handler to paste predefined HTML into the textarea
-    const handlePasteHtml = () : void => {
-        setHtmlCode(predefinedHtml);
-    }
-
+  const handlePasteHtml = () => {
+    setHtmlCode(predefinedHtml);
+  }
   return (
-    <div className="flex justify-center items-center h-screen bg-background">
-        {/* Center the HTML previewer card within the screen */}
-      <div className="w-full bg-card rounded-2xl p-6 shadow-lg max-w-2xl">
-        <h1 className="text-2xl font-bold text-center mb-4">HTML Previewer</h1>
-        <p className="text-center text-muted-foreground mb-4">
-        Enter your HTML code and see the preview.
-        </p>
-        <div className="grid gap-4">
-        {/* Textarea for entering HTML code */}
-        <Textarea 
-        value={htmlCode}
-        onChange={handleChange}
-        placeholder="Enter your html code here ..."
-        className="rounded-lg p-4 text-muted-foreground bg-background border border-input"
-        rows={8}
-        />
-        {/* Buttons to generate preview and paste predefined HTML */}
-        <div className="flex justify-center gap-2">
-            <Button className="rounded-2xl font-bold" onClick={handlePreview}>Generate Preview</Button>
-            <Button className="rounded-2xl font-bold" onClick={handlePasteHtml}>Paste HTML</Button>
+    <div className="flex items-center justify-center h-[100%]">
+      <div className="bg-card shadow-lg w-full max-w-2xl p-6 rounded-lg">
+        <h1 className="text-2xl font-bold mb-4 text-center">HTML Preview</h1>
+        <p className="text-gray-500 text-center mb-4">Enter your HTML code and see the preview.</p>
+        <div className="grid gap-4 mb-4">
+          <Textarea
+          value={htmlCode}
+          onChange={handleChange}
+          className="p-4 rounded-2xl border border-input focus:border-black"
+          placeholder="Enter your html code here..."
+          rows={8}
+          />
+          <div className="flex justify-center gap-4">
+            <Button className="font-bold rounded-2xl bg-gray-900 hover:bg-gray-800"
+            onClick={handlePreview}
+            >Generate Preview</Button>
+            <Button className="font-bold rounded-2xl bg-gray-900 hover:bg-gray-800"
+            onClick={handlePasteHtml}
+            >Paste HTML</Button>
+          </div>
         </div>
-        {/* Div to display the HTML preview */}
-        <div className="p-4 rounded-lg border border-input bg-background text-muted-foreground">
-            <div dangerouslySetInnerHTML={{__html:previewCode}}></div>
-        </div>
+        <div className="p-4 rounded-2xl border border-input">
+          <div dangerouslySetInnerHTML={{__html:HtmlPreviewer}}></div>
         </div>
       </div>
     </div>
